@@ -99,6 +99,9 @@ def extract_features(imgs, color_space='RGB', spatial_size=(32, 32),
 # and overlap fraction (for both x and y)
 def slide_window(img, x_start_stop=[None, None], y_start_stop=[None, None], 
                     xy_window=(64, 64), xy_overlap=(0.5, 0.5)):
+
+    if type(img)==str:
+        img = mpimg.imread(img)
     # If x and/or y start/stop positions not defined, set to image size
     if x_start_stop[0] == None:
         x_start_stop[0] = 0
@@ -140,8 +143,12 @@ def slide_window(img, x_start_stop=[None, None], y_start_stop=[None, None],
 
 # Define a function to draw bounding boxes
 def draw_boxes(img, bboxes, color=(0, 0, 255), thick=6):
-    # Make a copy of the image
-    imcopy = np.copy(img)
+
+    if type(img)==str:
+        imcopy = mpimg.imread(img)
+    else:
+        # Make a copy of the image
+        imcopy = np.copy(img)
     # Iterate through the bounding boxes
     for bbox in bboxes:
         # Draw a rectangle given bbox coordinates
@@ -229,6 +236,8 @@ def search_windows(img, windows, clf, scaler, color_space='RGB',
             on_windows.append(window)
     #8) Return windows for positive detections
     return on_windows
+
+
 
 
 
